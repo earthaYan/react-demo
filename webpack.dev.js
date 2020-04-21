@@ -3,8 +3,8 @@ const common=require('./webpack.common')
 
 module.exports=merge(common,{
     mode:'development',
-    devtool:'source-map',
-        devServer:{
+    devtool:'inline-source-map',
+    devServer:{
         contentBase:'./dist',
         compress:true,
         // 模块热替换和splitChunks不能同时使用
