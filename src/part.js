@@ -20,7 +20,7 @@ window.addEventListener('mousedown', function(e) {
   };
   console.error = (function(old) {
     return function error() {
-      errors.textContent += Array.prototype.slice.call(arguments).join(' ') + '\n';
+      errors.textContent += Array.prototype.slice.call(arguments).join(' ');
       errors.style.display = '';
       old.apply(this, arguments);
     }

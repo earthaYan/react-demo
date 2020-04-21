@@ -1,14 +1,21 @@
 const path=require("path")
 const HtmlWebpackPlugin=require('html-webpack-plugin')
 const {CleanWebpackPlugin}=require('clean-webpack-plugin')
+
+
 module.exports={
-    mode:'development',
     entry:'./src/index.jsx',
     output:{
-        filename:'main.js',
+        filename:'[name].[contenthash].js',
         path:path.resolve(__dirname,'dist')
     },
-    devtool:'inline-source-map',
+    plugins:[
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template:'./src/index.html',
+            filename:'index.html'
+        })
+    ],
     module:{
         rules:[
             {
@@ -26,19 +33,16 @@ module.exports={
             }
         ]
     },
-    plugins:[
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            title:'react+webpack的配置',
-            template:'./src/index.html',
-            filename:'index.html'
-        })
-    ],
-    devServer:{
-        contentBase:path.join(__dirname,'dist'),
-        compress:true,
-        hot:true,
-        publicPath:'/',
-        port:3000
+    optimization:{
+        runtimeChunk: 'single',
+        splitChunks:{
+            cacheGroups:{
+                vendor:{
+                    test:/[\\/]node_modules[\\/]/,
+                    name:'vendors',
+                    chunks:'all'
+                }
+            }
+        }
     }
 }

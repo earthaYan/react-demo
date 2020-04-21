@@ -2,7 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import './part.js'
-
+if(process.env.NODE_ENV=='development'){
+  console.log("开发环境")
+}else{
+  console.log("生产环境")
+}
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
