@@ -4,15 +4,17 @@ const {CleanWebpackPlugin}=require('clean-webpack-plugin')
 
 
 module.exports={
-    entry:'./src/index.jsx',
+    // entry:'./src/index.jsx',
+    entry:'./src/Game.jsx',
     output:{
-        filename:'[name].[contenthash].js',
+        filename:'[name].js',
         path:path.resolve(__dirname,'dist')
     },
     plugins:[
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template:'./src/index.html',
+            // template:'./src/index.html',
+            template:'./src/Game.html',
             filename:'index.html'
         })
     ],

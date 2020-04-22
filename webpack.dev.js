@@ -8,8 +8,7 @@ module.exports=merge(common,{
         contentBase:'./dist',
         compress:true,
         // 模块热替换和splitChunks不能同时使用
-        hot:false,
-        publicPath:'/',
-        port:3000
+        hot:true,
+        publicPath:'/'
     },
 })
