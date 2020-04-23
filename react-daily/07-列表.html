@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表</title>
+</head>
+<body>
+    <div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js"></script>
+
+<script type="text/babel">
+class ListItem extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        return <li>{this.props.value}</li>
+    }
+}
+class NumberList extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        const numbers = this.props.numbers;
+        const listItems = numbers.map((number) => <ListItem key={number} value={number}/>)
+        return <ol>{listItems}</ol>
+    }
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+</script>
+</body>
+</html>

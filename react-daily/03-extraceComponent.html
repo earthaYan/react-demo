@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拆分组件</title>
+</head>
+<body>
+    <div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js"></script>
+
+<script type="text/babel">
+function Avator(props){
+    return (
+        <img src={props.user.avatarUrl}  className="Avatar"/>
+    )
+}
+function UserInfo(props){
+    return(
+        <div className="UserInfo">
+                <Avator user={props.user}/>
+                <div className="UserInfo-name">
+                    {props.user.name}
+                </div>
+        </div>
+    )
+}
+function Comment(props){
+    return (
+        <div className="Comment">
+            <UserInfo user={props.author}/>
+            <div className="Comment-text">
+                {props.text}
+            </div>
+            <div className="Comment-date">
+                {props.date}
+            </div>
+        </div>
+    )
+}
+const author={
+    name:'yanyue',
+    avatarUrl:'./img/Chrysanthemum.jpg'
+}
+const text="loremjsahhdakjhdkjahkjdhakj"
+ReactDOM.render(
+    <Comment  author={author} text={text} date="2019"/>,
+    document.getElementById("root")
+)
+</script>
+<style>
+    .UserInfo{
+        display: flex;
+    }
+    .Avatar{
+        width:50px;
+        height:50px;
+    }
+</style>
+</body>
+</html>

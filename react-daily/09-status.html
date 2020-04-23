@@ -1,0 +1,113 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单</title>
+</head>
+<body>
+    <div id="root">
+    </div>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js"></script>
+
+<script type="text/babel">
+const scaleNames={
+    c:'Celsius',
+    f:'Fahrenheit'
+}
+class Calculator extends React.Component{
+    constructor(props){
+        super(props)
+        this.handleCelsiusChange=this.handleCelsiusChange.bind(this)
+        this.handleFahrenheitChange=this.handleFahrenheitChange.bind(this)
+        this.state={
+            temp:'37',
+            scale:'c'
+        }
+    }
+    handleCelsiusChange(temp){
+        this.setState({
+            scale:'c',
+            temp
+        })
+    }
+    handleFahrenheitChange(temp){
+        this.setState({
+            scale:'f',
+            temp
+        })
+    }
+    render(){
+        const scale=this.state.scale
+        const temp=this.state.temp
+        const celsius=scale==='f'?tryConvert(temp,toCelsius):temp
+        const fahrenheit=scale==='c'?tryConvert(temp,toFahrenheit):temp
+        return(
+            <div>
+                <Temperature scale='c' temp={celsius}
+                    handleChange={this.handleCelsiusChange}/>
+                <Temperature scale='f' temp={fahrenheit}
+                    handleChange={this.handleFahrenheitChange}/>
+                <BoilingVerdict celsius={parseFloat(temp)}/>
+            </div>  
+        )
+    }
+}
+class BoilingVerdict extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        let element
+        if(this.props.celsius>=100){
+            element= <p>The water would boil</p>
+        }else{
+            element= <p>The water would not boil</p>
+        }
+        return element
+    }
+}
+class Temperature extends React.Component{
+    constructor(props){
+        super(props)
+        this.handleChange=this.handleChange.bind(this)
+    }
+    handleChange(e){
+        this.props.handleChange(e.target.value)
+    }
+    render(){
+        const temp=this.props.temp
+        const scale=this.props.scale
+        return(
+            <fieldset>
+                <legend>输入温度值 {scaleNames[scale]}</legend>
+                <input type="number"
+                    value={temp}
+                    onChange={this.handleChange}/>
+            </fieldset>
+        )
+    }
+}
+function toCelsius(fahrenheit){
+    return (fahrenheit-32)*5/9
+}
+function toFahrenheit(celsius) {
+  return (celsius * 9 / 5) + 32;
+}
+function tryConvert(temperature,convert){
+    const input=parseFloat(temperature)
+    if(Number.isNaN(input)){
+        return ''
+    }
+    const output=convert(input)
+    const rounded=Math.round(output*1000)/1000
+    return rounded.toString()
+}
+ReactDOM.render(
+    <Calculator/>,
+    document.getElementById("root")
+)
+</script>
+</body>
+</html>

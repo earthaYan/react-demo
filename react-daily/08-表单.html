@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单</title>
+</head>
+<body>
+    <div id="root">
+    </div>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js"></script>
+
+<script type="text/babel">
+class NameForm extends React.Component{
+    constructor(props){
+        super(props)
+        this.handleChange=this.handleChange.bind(this)
+        this.handleSubmit=this.handleSubmit.bind(this)
+        this.state={
+            username:null,
+            content:null,
+            option:null,
+            isGoing:null
+        }
+    }
+    handleSubmit(event){
+        alert("提交的名字是"+this.state.username)
+        event.preventDefault()
+    }
+    handleChange(event){
+        console.log(event.target.name)
+        const target=event.target
+        const name=target.name
+        const value=(name=='isGoing'?target.checked:target.value)
+        this.setState({
+            [name]:value,
+        })
+
+    }
+    render(){
+        return(
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    用户名：
+                    <input type="text" value={this.state.value} name="username"
+                        onChange={this.handleChange}/>
+                </label>
+                <br/>
+                <label>
+                    评价：
+                    <textarea cols="30" rows="10" value={this.state.content} onChange={this.handleChange}  name="content">
+                    </textarea>
+                </label>
+                <br/>
+                <label>
+                    选择你喜欢的风味:
+                    <select   value={this.state.option} onChange={this.handleChange} name="option">
+                        <option value="grapefruit">葡萄柚</option>
+                        <option value="lime">酸橙</option>
+                        <option value="coconut">椰子</option>
+                        <option value="mango">芒果</option>
+                    </select>
+                </label>
+                <br/>
+                <label>
+                参与:
+                <input
+                    name="isGoing"
+                    type="checkbox"
+                    checked={this.state.isGoing}
+                    onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="提交"/>
+            </form>
+        )
+    }
+}
+ReactDOM.render(
+    <NameForm/>,
+    document.getElementById("root")
+)
+</script>
+</body>
+</html>
