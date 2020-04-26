@@ -11,36 +11,39 @@
 <script src="http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js"></script>
 
 <script type="text/babel">
-class LikeButton extends React.Component{
+class Hello extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            liked:false,
-            input:''
+            opacity:1.0
         }
-        this.handleClick=this.handleClick.bind(this)
-        this.handleInput=this.handleInput.bind(this)
     }
-    handleClick(){
-        this.setState({liked:!this.state.liked})
-    }
-    handleInput(e){
-        this.setState({input:e.target.value})
+    componentDidMount(){
+        this.timer=setInterval(function(){
+            var opacity=this.state.opacity
+            opacity-=0.05
+            if(opacity<0.1){
+                opacity=1.0
+            }
+            this.setState({
+                opacity:opacity
+            })
+        }.bind(this),100)
+        // 清除定时器
+        setTimeout(() => {
+            clearInterval(this.timer)
+        }, 10000);
     }
     render(){
-        var text=this.state.liked?'like':'not like'
-        var input=this.state.input
         return(
-            <div>
-                <p onClick={this.handleClick}>you {text} this,click it to toggle</p>
-                <input type="text" onChange={this.handleInput} value={input}/>
+            <div style={{opacity:this.state.opacity}}>
+                Hello,{this.props.name}
             </div>
-            
         )
     }
 }
 ReactDOM.render(
-    <LikeButton />,
+    <Hello name="静香"/>,
     document.getElementById("root")
 )
 </script>
