@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>继承</title>
 </head>
 <body>
     <div id="root"></div>
@@ -36,6 +36,9 @@ class SplitPane extends React.Component{
                 <div className="SplitPane-right">
                     {this.props.right}
                 </div>
+                <div>
+                    {this.props.bottom}
+                </div>
             </div>
         )
     }
@@ -54,6 +57,9 @@ class WelcomeDialog extends React.Component{
                     }
                     right={
                         <Chat/>
+                    }
+                    bottom={
+                        <Bottom/>
                     }
                 />
             </div>
@@ -78,6 +84,17 @@ class Chat extends React.Component{
     render(){
         return(
             <p>聊天信息react</p>
+        )
+    }
+}
+class Bottom extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        console.log("bottt")
+        return(
+            <p>底部</p>
         )
     }
 }

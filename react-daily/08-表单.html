@@ -21,24 +21,28 @@ class NameForm extends React.Component{
             username:null,
             content:null,
             option:null,
-            isGoing:null
+            isGoing:true
         }
     }
     handleSubmit(event){
-        alert("提交的名字是"+this.state.username)
+        alert("提交的是"+JSON.stringify(this.state))
         event.preventDefault()
     }
     handleChange(event){
-        console.log(event.target.name)
         const target=event.target
         const name=target.name
         const value=(name=='isGoing'?target.checked:target.value)
+        // 采用ES6计算属性名称的语法
         this.setState({
-            [name]:value,
+           [name]:value,
         })
-
     }
     render(){
+        var options=[
+            {name1:"grapefruit",cname:"葡萄柚"},
+            {name1:"lime",cname:"酸橙"},
+            {name1:"coconut",cname:"椰子"},
+            {name1:"mango",cname:"芒果"}]
         return(
             <form onSubmit={this.handleSubmit}>
                 <label>
@@ -56,10 +60,11 @@ class NameForm extends React.Component{
                 <label>
                     选择你喜欢的风味:
                     <select   value={this.state.option} onChange={this.handleChange} name="option">
-                        <option value="grapefruit">葡萄柚</option>
-                        <option value="lime">酸橙</option>
-                        <option value="coconut">椰子</option>
-                        <option value="mango">芒果</option>
+                        {
+                            options.map((option,index)=>{
+                                return <option value={option.name1}>{index}:{option.cname}</option>
+                            })
+                        }
                     </select>
                 </label>
                 <br/>

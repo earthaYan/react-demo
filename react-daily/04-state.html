@@ -12,24 +12,49 @@
 <script type="text/babel">
     class Clock extends React.Component{
         constructor(props){
+            console.log("在 React 组件挂载之前，会调用它的构造函数")
             super(props)
             this.state={
-                date:new Date()
+                date:new Date(),
+                count:0
+            }
+            this.handleAdd=this.handleAdd.bind(this)
+        }
+        handleAdd(){
+            this.setState(
+                {count:this.state.count+1}
+            )
+            if(true){
+                // 起作用
+                this.setState((state)=>{
+                    console.log(this.state.count,state.count)
+                   return  {count:state.count+1}
+                })
+                //不起作用
+                // this.setState(
+                //     {count:this.state.count+1}
+                // )
             }
         }
         render(){
             return(
                 <div>
+                    <h3>点击按钮一下加一{this.state.count}</h3>
+                    <button onClick={this.handleAdd}>点击加一</button>
                     <h1>hello world</h1>
                     <h2>{this.state.date.toLocaleTimeString()}</h2>
                 </div>
             )
         }
         componentDidMount(){
+            console.log("在组件挂载后（插入 DOM 树中）立即调用")
             this.timerID=setInterval(
                 ()=>this.tick(),
                 1000
             )
+        }
+        componentDidUpdate(){
+            
         }
         componentWillUnmount(){
             clearInterval(this.timerID)
